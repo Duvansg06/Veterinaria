@@ -168,32 +168,27 @@ public class VentanaPersonas extends JDialog implements ActionListener{
 			}
 			textAreaResultados.setText(resultado.toString());
 		}
-		
-		
-		
+	
 	}
+	
 	private void eliminarPersona() {
-		
-		try {
-			PersonaVo personaObtenida = new PersonaVo();
-			
-			personaObtenida.setDocumento(textDocumento.getText());
-			
-			
-			boolean eliminado =  miCoordinador.eliminarPersona(personaObtenida);
-			if (eliminado) {
-			    textAreaResultados.setText("Persona eliminada correctamente.");
-			} else {
-			    textAreaResultados.setText("No se encontró la persona o hubo un error.");
-			}
-			
-					
-			
-		} catch (Exception e) {
-		    JOptionPane.showMessageDialog(this, "Error al eliminar: " + e.getMessage());
-		}
-		
+	    String documento = textDocumento.getText();
+
+	    if (documento.isEmpty()) {
+	        JOptionPane.showMessageDialog(this, "Debe ingresar un documento");
+	        return;
+	    }
+
+	    int confirmacion = JOptionPane.showConfirmDialog(this, "¿Seguro que desea eliminar esta persona y sus mascotas?");
+	    if (confirmacion != JOptionPane.YES_OPTION) {
+	        return;
+	    }
+
+	    String resultado = miCoordinador.eliminarPersonaConMascotas(documento);
+	    JOptionPane.showMessageDialog(this, resultado);
 	}
+
+	
 	private void actualizarPersona() {
 		
 		if(textDocumento == null ) {

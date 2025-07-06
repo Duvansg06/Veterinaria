@@ -1,6 +1,7 @@
 package principal;
 
 import conexion.Conexion;
+import dao.MascotaDao;
 import dao.PersonaDao;
 import ventanas.VentanaMascotas;
 import ventanas.VentanaPersonas;
@@ -17,9 +18,11 @@ public class Relaciones {
 		
 		
 		PersonaDao miPersonaDao = new PersonaDao();
+		MascotaDao miMascotaDao = new MascotaDao();
 		Coordinador miCoordinador = new Coordinador();
 		
 		miCoordinador.setPersonaDao(miPersonaDao);
+		miCoordinador.setMascotaDao(miMascotaDao);
 		
 		
 		miVentanaPrincipal.setCoordinador(miCoordinador);

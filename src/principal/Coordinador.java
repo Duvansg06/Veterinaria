@@ -2,9 +2,11 @@ package principal;
 
 import java.util.List;
 
+import dao.MascotaDao;
 import dao.PersonaDao;
 import ventanas.VentanaMascotas;
 import ventanas.VentanaPersonas;
+import vo.MascotaVo;
 import vo.PersonaVo;
 
 
@@ -14,6 +16,7 @@ public class Coordinador {
 	private VentanaPersonas ventanaPersonas;
 	private VentanaMascotas ventanaMascotas;
 	private PersonaDao miPersonaDao;
+	private MascotaDao miMascotaDao;
 	
 	
 	
@@ -57,16 +60,48 @@ public class Coordinador {
 		return miPersonaDao.actualizarPersona(persona);
 	}
 
-	public boolean eliminarPersona(PersonaVo personaObtenida) {
-		
-		return miPersonaDao.eliminarPersona(personaObtenida);
-	}
+//	public boolean eliminarPersona(PersonaVo personaObtenida) {
+//		
+//		return miPersonaDao.eliminarPersona(personaObtenida);
+//	}
 
 	public List<PersonaVo> consultarListaPersonas() {
 		
 		return miPersonaDao.consultarListaPersonas();
 	}
 
+	public String registrarMascota(MascotaVo mascota) {
+		
+		return miMascotaDao.registrarMascota(mascota);
+	}
+
+	public MascotaVo consultarMascota(String documentoMasc) {
+		
+		return miMascotaDao.consultarMascota(documentoMasc);
+	}
+
+	public void setMascotaDao(MascotaDao miMascotaDao2) {
+		this.miMascotaDao = miMascotaDao2;
+		
+	}
+
+	public String actualizarMascota(MascotaVo mascota) {
+		return miMascotaDao.actualizarMascota(mascota);
+	}
+
+
+
+	public String eliminarPersonaConMascotas(String documento) {
+		
+		return miPersonaDao.eliminarPersonaConMascotas(documento);
+	}
+
+	public List<MascotaVo> consultarListaMasc() {
+		
+		return miMascotaDao.consultarListaMasc();
+	}
+
+	
 	
 	
 

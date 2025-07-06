@@ -6,8 +6,18 @@ public class MascotaVo {
 	private String raza;
 	private String sexo;
 	private String documentoPersona;
-
+	private String nombreDueno;
 	private int id;
+	
+	
+	
+	public String getNombreDueno() {
+		return nombreDueno;
+	}
+	public void setNombreDueno(String nombreDueno) {
+		this.nombreDueno = nombreDueno;
+	}
+	
 	public int getId() {
 		return id;
 	}

@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 
 import conexion.Conexion;
 import principal.Coordinador;
+import vo.MascotaVo;
 import vo.PersonaVo;
 
 public class PersonaDao {
@@ -71,8 +72,7 @@ public class PersonaDao {
 	        	
 	            persona = new PersonaVo();
 	            
-//	            System.out.println("Nombre desde base: " + rs.getString("nombre"));
-//	            System.out.println("Documento desde base: " + rs.getString("documento"));
+
 	            persona.setDocumento(rs.getString("documento"));
 	            persona.setNombre(rs.getString("nombre"));
 	            persona.setTelefono(rs.getString("telefono"));
@@ -119,28 +119,37 @@ public class PersonaDao {
 
 
 
-	public boolean eliminarPersona(PersonaVo personaObtenida) {
-		
-	try {
-		
-		Connection conectar = Conexion.getInstancia().getConnection();
-		String sql = "DELETE  FROM persona WHERE documento = ?";
-		PreparedStatement ps = conectar.prepareStatement(sql);
 	
-		ps.setString(1, personaObtenida.getDocumento());
-		
-		int fila = ps.executeUpdate();
-		ps.close();
-		conectar.close();
-		return fila > 0;
-		
-	} catch (Exception e) {
-		 System.out.println("Error al eliminar persona: " + e.getMessage());
+	public String eliminarPersonaConMascotas(String documento) {
+	    String resultado = "";
+
+	    try {
+	     
+	        String sqlEliminarMascotas = "DELETE FROM mascota WHERE documento_persona = ?";
+	        PreparedStatement psMascota = conexion.prepareStatement(sqlEliminarMascotas);
+	        psMascota.setString(1, documento);
+	        psMascota.executeUpdate(); 
+
+	       
+	        String sqlEliminarPersona = "DELETE FROM persona WHERE documento = ?";
+	        PreparedStatement psPersona = conexion.prepareStatement(sqlEliminarPersona);
+	        psPersona.setString(1, documento);
+	        int filasAfectadas = psPersona.executeUpdate();
+
+	        if (filasAfectadas > 0) {
+	            resultado = "Persona y sus mascotas eliminadas correctamente.";
+	        } else {
+	            resultado = "No se encontró la persona para eliminar.";
+	        }
+
+	    } catch (SQLException e) {
+	        resultado = "Error al eliminar: " + e.getMessage();
+	        System.err.println(resultado);
+	    }
+
+	    return resultado;
 	}
-		
-		
-		return false;
-	}
+
 
 
 
@@ -174,6 +183,18 @@ public class PersonaDao {
 		return lista;
 	}
 
+
+
+
+
+	
+	
+
+	
+	
+	
+	
+	
 
 
 	
