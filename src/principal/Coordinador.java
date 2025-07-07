@@ -101,6 +101,10 @@ public class Coordinador {
 		return miMascotaDao.consultarListaMasc();
 	}
 
+	public String eliminarMascotaPorDuenoYNombre(String documentoPersona, String nombreMasc) {
+		return miMascotaDao.eliminarMascotaPorDuenoYNombre(documentoPersona, nombreMasc);
+	}
+
 	
 	
 	

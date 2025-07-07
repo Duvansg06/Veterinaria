@@ -1,6 +1,8 @@
 package ventanas;
 
 import java.awt.BorderLayout;
+
+
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,6 +24,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
 
+import procesos.ProcesosGenerales;
+import procesos.ProcesosPersona;
+
+
 public class VentanaPersonas extends JDialog implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
@@ -39,6 +45,8 @@ public class VentanaPersonas extends JDialog implements ActionListener{
 	private JTextArea textAreaResultados;
 	private Coordinador miCoordinador;
 	private PersonaVo miPersonaVo;
+	private ProcesosGenerales procesosPersona = new ProcesosPersona();
+
 	private JScrollPane scrollPane;
 	
 
@@ -217,7 +225,7 @@ public class VentanaPersonas extends JDialog implements ActionListener{
 			return;
 		}
 		
-		PersonaVo persona = miCoordinador.consultarPersona(documento);
+		PersonaVo persona = (PersonaVo) procesosPersona.consultar(documento);
 		
 		if(persona != null) {
 			textAreaResultados.setText("Datos de la persona:\n");
@@ -254,6 +262,8 @@ public class VentanaPersonas extends JDialog implements ActionListener{
 		
 	}
 	private void registrarPersona() {
+		
+		
 		if (textDocumento.getText().trim().isEmpty() || 
 			textNombre.getText().trim().isEmpty() || 
 			textTelefono.getText().trim().isEmpty()) {
@@ -268,7 +278,7 @@ public class VentanaPersonas extends JDialog implements ActionListener{
 		persona.setDocumento(textDocumento.getText());
 		persona.setTelefono(textTelefono.getText());
 		
-		 String mensaje = miCoordinador.registrarPersona(persona);
+		String mensaje = procesosPersona.registrar(persona);
 		 textAreaResultados.append(mensaje + "\n");
 		
 		

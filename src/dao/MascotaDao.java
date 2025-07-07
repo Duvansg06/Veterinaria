@@ -142,6 +142,51 @@ public class MascotaDao {
 	}
 	
 	
+	public String eliminarMascotaPorId(int idMascota) {
+	    String resultado = "";
+	    String sql = "DELETE FROM mascota WHERE id = ?";
+
+	    try {
+	        PreparedStatement stmt = conexion.prepareStatement(sql);
+	        stmt.setInt(1, idMascota);
+	        int filas = stmt.executeUpdate();
+
+	        if (filas > 0) {
+	            resultado = "Mascota eliminada correctamente.";
+	        } else {
+	            resultado = "No se encontró ninguna mascota con ese ID.";
+	        }
+	    } catch (Exception e) {
+	        resultado = "Error al eliminar mascota: " + e.getMessage();
+	    }
+
+	    return resultado;
+	}
+
+	
+	public String eliminarMascotaPorDuenoYNombre(String documentoPersona, String nombreMasc) {
+	    String resultado = "";
+	    String sql = "DELETE FROM mascota WHERE documento_persona = ? AND nombreMasc = ?";
+
+	    try {
+	        PreparedStatement stmt = conexion.prepareStatement(sql);
+	        stmt.setString(1, documentoPersona);
+	        stmt.setString(2, nombreMasc);
+	        int filas = stmt.executeUpdate();
+
+	        if (filas > 0) {
+	            resultado = "Mascota eliminada correctamente.";
+	        } else {
+	            resultado = "No se encontró ninguna mascota con esos datos.";
+	        }
+	    } catch (Exception e) {
+	        resultado = "Error al eliminar mascota: " + e.getMessage();
+	    }
+
+	    return resultado;
+	}
+
+	
 	
 
 

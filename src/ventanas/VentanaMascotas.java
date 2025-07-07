@@ -183,21 +183,28 @@ public class VentanaMascotas extends JDialog implements ActionListener{
 	
 
 	private void eliminarMascota() {
-	    String documento = textIdDUEÑO.getText();
+	    String documento = textIdDUEÑO.getText().trim();
+	    String nombreMascota = textNombre.getText().trim();
 
-	    if (documento.isEmpty()) {
-	        JOptionPane.showMessageDialog(this, "Debe ingresar un documento");
+	    if (documento.isEmpty() || nombreMascota.isEmpty()) {
+	        JOptionPane.showMessageDialog(this, "Debe ingresar el ID del dueño y el nombre de la mascota");
 	        return;
 	    }
 
-	    int confirmacion = JOptionPane.showConfirmDialog(this, "¿Seguro que desea eliminar esta persona y sus mascotas?");
+	    int confirmacion = JOptionPane.showConfirmDialog(this, 
+	        "¿Seguro que desea eliminar la mascota '" + nombreMascota + "' del dueño con documento '" + documento + "'?", 
+	        "Confirmar eliminación", 
+	        JOptionPane.YES_NO_OPTION);
+
 	    if (confirmacion != JOptionPane.YES_OPTION) {
 	        return;
 	    }
 
-	    String resultado = miCoordinador.eliminarPersonaConMascotas(documento);
+	    String resultado = miCoordinador.eliminarMascotaPorDuenoYNombre(documento, nombreMascota);
 	    JOptionPane.showMessageDialog(this, resultado);
+	    limpiar();
 	}
+
 
 	
 
